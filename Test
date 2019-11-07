@@ -1,0 +1,27 @@
+import requests
+import re
+import time
+import random
+# header={
+
+# }
+#正则表达式 href="breed-qca956x-uart_rx18_tx22-reset1.bin
+#文件资源地址在 https://breed-qca956x-uart_rx18_tx22-reset1.bin
+url="https://breed.hackpascal.net/"
+res=requests.get(url,verify = False)
+response=res.text
+pat=r'href="(.*?).bin'
+List=re.findall(pat,response)
+# print(response)
+# print(List)
+
+
+for i in range(0,len(List)):
+  breedname=List[i]
+  urll="https://breed.hackpascal.net/"+str(breedname)+".bin"
+  data=requests.get(urll,verify = False).content
+  print("正在下载",breedname,'.bin')
+  with open("D:\\breed\\{}.bin".format(breedname),"wb") as f:
+    f.write(data)
+    time.sleep(1.6)
+
